@@ -89,11 +89,13 @@ local Section17 = Tab7:CreateSection("Premium")
 local Toggle3 = Section13:CreateToggle("Auto Pickup", nil, function(State)
 	getgenv().Instant = State
 
-	while getgenv().Instant do wait(0.5)
+	while getgenv().Instant do 
+        task.wait(0.5)
+    
 		for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
 			if v:IsA("ProximityPrompt") and game:GetService("Players").LocalPlayer:DistanceFromCharacter(v.Parent.Position) <= 30 then
 				fireproximityprompt(v,0)
-				wait(0.1)
+				task.wait(0.1)
 				fireproximityprompt(v,1)
 			end
 		end
@@ -528,7 +530,7 @@ function LOCKHBE()
 			end)
 			game:GetService("RunService").RenderStepped:Wait()
 		until not _G.LOCKPICKHBE
-		wait(0.04)
+		task.wait(0.04)
 		for i,v in next, Player.PlayerGui:GetChildren() do
 			if v.Name == "LockpickGUI" then
 				for k,z in next, v:GetDescendants() do
@@ -687,7 +689,7 @@ if _G.infinjump then
 		if k == "n" then
 			Humanoid = Char:FindFirstChildOfClass("Humanoid")
 			Humanoid:ChangeState("Jumping")
-			wait(0.1)
+			task.wait(0.1)
 			Humanoid:ChangeState("Seated")
 		end
 	end)
@@ -701,7 +703,17 @@ Mouse.KeyDown:Connect(function(k)
 			_G.infinjump = true
 		end
 	end
-end)      
+end)
+
+spawn(function()
+    while true do
+        if Char.Humanoid.Health == 0 then
+            _G.infinjump = false
+            break
+        end
+        task.wait()
+    end
+end)
 end)
 
 Toggle3:AddToolTip("Inf Jump")
@@ -754,6 +766,7 @@ local Toggle5 = Section1:CreateToggle("Noclip Fly", nil, function(State)
 	local dir = {w = 0, s = 0, a = 0, d = 0}
 	local spd = 2 
 
+
 	Mouse.KeyDown:Connect(function(key)
 		if key:lower() == "w" then dir.w = 1
 		elseif key:lower() == "s" then dir.s = 1
@@ -775,10 +788,21 @@ local Toggle5 = Section1:CreateToggle("Noclip Fly", nil, function(State)
 
 enabled = false
 
+spawn(function()
+    while true do
+        if Char.Humanoid.Health == 0 then
+            Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
+            enabled = false
+            break
+        end
+        task.wait()
+    end
+end)
+
     Mouse.KeyDown:Connect(function(key)
 	    if (key) == "t" and enabled == false then
 		    enabled = true
-		    repeat wait(1/44)
+		    repeat task.wait(1/44)
 			    Torso.Anchored = true
 			    Char:WaitForChild('Humanoid').PlatformStand = true
 			    Torso.CFrame = CFrame.new(Torso.Position, game.Workspace.CurrentCamera.CoordinateFrame.p) * CFrame.Angles(0,math.rad(180),0) * CFrame.new((dir.d-dir.a)*spd,0,(dir.s-dir.w)*spd)
@@ -793,16 +817,6 @@ enabled = false
 		    Torso.Anchored = false
 	    end
     end)
-
-    spawn(function()
-        while true do
-            if Char.Humanoid.Health == 0 then
-                Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
-                break
-            end
-            wait()
-        end
-    end)
 end)
 
 Toggle5:AddToolTip("[T to toggle]")
@@ -813,7 +827,8 @@ end)
 local Toggle6 = Section1:CreateToggle("Noclip", nil, function(v) 
 _G.Noclip = v
 
-local function Noclip()
+while task.wait(0.00000001) do
+if Char.Humanoid.Health == 0 then _G.Noclip = false break end
 if Char ~= nil and _G.Noclip == true then
 for _, selfChar in pairs(Char:GetDescendants()) do
     if selfChar:IsA("BasePart") and selfChar.CanCollide == true and selfChar.Name then
@@ -822,8 +837,6 @@ for _, selfChar in pairs(Char:GetDescendants()) do
     end
 end
 end
-
-game:GetService('RunService').Stepped:Connect(Noclip)
 end)
 
 Toggle6:AddToolTip("Noclip ez")

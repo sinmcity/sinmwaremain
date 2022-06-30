@@ -1,4 +1,4 @@
-if game.PlaceId == 8343259840 then
+if game.PlaceId == 8343259840 and getgenv().SinmWare = 'SinmWare On Top>>' then
 	local Success, Error = pcall(function()
 		repeat wait() until game:IsLoaded()
 
@@ -2087,4 +2087,7 @@ if game.PlaceId == 8343259840 then
 			local MSGBox = messagebox("An Error Occured, try again!", "Error 0x10", 0)
 		end)
 	end
+    else
+        StarterGui:SetCore("SendNotification", {Title = "SinmWare"; Text = "why did you change the sinmware on top thing!!!! change it back😡😡😡😡"; Duration = 10 })
+        return
 end

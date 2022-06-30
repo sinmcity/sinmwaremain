@@ -1,15 +1,20 @@
-if game.PlaceId == 8343259840 and getgenv().SinmWare = 'SinmWare On Top>>' then
+if not getgenv().SinmWare == 'SinmWare On Top>>' then
+    StarterGui:SetCore("SendNotification", {Title = "SinmWare"; Text = "why did you change the sinmware on top thing!!!! change it back😡😡😡😡"; Duration = 10 })
+    return
+end
+
+if game.PlaceId == 8343259840  then
 	local Success, Error = pcall(function()
 		repeat wait() until game:IsLoaded()
 
 		-- #region // No Console Log    
 		game:GetService("RunService").RenderStepped:Connect(function()
-			for _, Connection in next, getconnections(game:GetService("ScriptContext").Error) do
-				Connection:Disable()
+			for _, connect in next, getconnections(game:GetService("ScriptContext").Error) do
+				connect:Disable()
 			end
 
-			for _, Connection in next, getconnections(game:GetService("LogService").MessageOut) do
-				Connection:Disable()
+			for _, connection in next, getconnections(game:GetService("LogService").MessageOut) do
+				connection:Disable()
 			end
 		end)
 		-- #endregion
@@ -574,7 +579,7 @@ if game.PlaceId == 8343259840 and getgenv().SinmWare = 'SinmWare On Top>>' then
 
 		local Framework                = loadstring(game:HttpGet("https://pastebin.com/raw/bqn7Ji5i", true))() -- https://raw.githubusercontent.com/JackHiggly/RobloxThings/main/TestUI
 		local ESPFramework             = loadstring(game:HttpGet("https://pastebin.com/raw/X94ieMW1", true))()
-		local Watermark                = Framework:CreateWatermark("Sinmware | {game} | {fps}")
+		local Watermark                = Framework:CreateWatermark("Sinmware | Criminality | {fps}")
 
 		--if wlID[game.Players.LocalPlayer.UserId] then
 		--SinmWare                  = Framework:CreateWindow(Version, Vector2.new(550, 700)) -- 492, 588
@@ -2087,7 +2092,4 @@ if game.PlaceId == 8343259840 and getgenv().SinmWare = 'SinmWare On Top>>' then
 			local MSGBox = messagebox("An Error Occured, try again!", "Error 0x10", 0)
 		end)
 	end
-    else
-        StarterGui:SetCore("SendNotification", {Title = "SinmWare"; Text = "why did you change the sinmware on top thing!!!! change it back😡😡😡😡"; Duration = 10 })
-        return
 end

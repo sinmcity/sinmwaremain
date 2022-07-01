@@ -21,6 +21,20 @@ if game.PlaceId == 8343259840 then
 		end)
 		-- #endregion
 
+		-- #region // AntiKick   
+
+		local OldNameCall
+		OldNameCall = hookmetamethod(game, "__namecall", function(Self, ...)
+			if not checkcaller() and getnamecallmethod() == "FireServer" and Self.Name == "ZFKLF_H" then
+				return
+			end
+			if not checkcaller() and getnamecallmethod() == "InvokeServer" and Self.Name == "RCTNMEUN" then
+				return 
+			end
+			return OldNameCall(Self, ...)
+		end)
+		-- #endregion
+
 		-- #region // Services
 
 		local Version                           = "SinmWare - Criminality"
@@ -41,7 +55,7 @@ if game.PlaceId == 8343259840 then
 
 		-- #region // Variables
 
-		local Settings                          = { GunMods = { Fly = false,NoRecoil = false, InstantEquip = false, Spread = false, AutoMode = false, SpreadAmount = 0 }, DownedChat = false, KillChat = false, DownedMSG = "retard", KillMSG = "", IsDead = true, AutoPickCash = false, AutoPickTools = false, AutoPickScrap = false, InfiniteStamina = false, NoJumpCooldown = false, SpaceJump = false, NoFailLockpick = false, ShowChatLogs = true, NoFlashbang  = false, NoSmoke = false, UnlockDoorsNearby = false, OpenDoorsNearby = false, NoClip = false, FullBright = false, CamFovToggled = false, CamFov = 70, Zoom = 10, InfinitePepperSpray = false, PepperSprayAura = false, WalkSpeed = {Enabled = false, Amount = 30}, JumpPower = {Enabled = false, Amount = 75}, NoBarbwire = false, NoFallDamage = false, NoRagdoll = false, WatermarkOn = false, ViewModel = { Enabled = false, Viewmodel = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.ForceField }, Melees = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.ForceField }, Guns = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.Plastic }, LeftArmOff = false }, CustomHitSound = 5043539486, VolumeHitsound = .7, WallBang = false, ElevatorTP = false, TowerTP = false, UIKey = Enum.KeyCode.LeftAlt};
+		local Settings                          = { GunMods = { NoRecoil = false, InstantEquip = false, Spread = false, AutoMode = false, SpreadAmount = 0 }, DownedChat = false, KillChat = false, DownedMSG = "retard", KillMSG = "", IsDead = true, AutoPickCash = false, AutoPickTools = false, AutoPickScrap = false, InfiniteStamina = false, NoJumpCooldown = false, SpaceJump = false, NoFailLockpick = false, ShowChatLogs = true, NoFlashbang  = false, NoSmoke = false, UnlockDoorsNearby = false, OpenDoorsNearby = false, NoClip = false, FullBright = false, CamFovToggled = false, CamFov = 70, Zoom = 10, InfinitePepperSpray = false, PepperSprayAura = false, WalkSpeed = {Enabled = false, Amount = 30}, JumpPower = {Enabled = false, Amount = 75}, NoBarbwire = false, NoFallDamage = false, NoRagdoll = false, WatermarkOn = false, ViewModel = { Enabled = false, Viewmodel = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.ForceField }, Melees = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.ForceField }, Guns = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.Plastic }, LeftArmOff = false }, CustomHitSound = 5043539486, VolumeHitsound = .7, WallBang = false, ElevatorTP = false, TowerTP = false, UIKey = Enum.KeyCode.LeftAlt};
 		local ESPSettings                       = { PlayerESP = { Enabled = false, TracersOn = false, BoxesOn = false, NamesOn = true, DistanceOn = true, HealthOn = true, ToolOn = true, FaceCamOn = false, Distance = 2000 }, ScrapESP = { Enabled = false, Distance = 2000, LegendaryOnly = true, RareOnly = true, GoodOnly = true, BadOnly = true }, SafeESP = { Enabled = false, Distance = 2000, BigOnly = true, SmallOnly = true }, RegisterESP = { Enabled = false, Distance = 2000 }, ESPColor = Color3.fromRGB(255, 255, 255), ToolColor = Color3.fromRGB(255, 255, 255)};
 		local CoolDowns                         = { AutoPickUps = { MoneyCooldown = false, ScrapCooldown = false, ToolCooldown = false } }
 
@@ -318,6 +332,43 @@ if game.PlaceId == 8343259840 then
 				end)
 			end
 			coroutine.wrap(InfoUpdate)()
+		end
+		-- #endregion
+
+		-- #region // Bypass EZ chat 
+		local function BypassEz()
+			local meta, old = getrawmetatable(game), {};
+			for i, v in next, meta do old[i] = v end;
+			
+			local char = '˞';
+			
+			setreadonly(meta, false);
+			
+			meta.__namecall = newcclosure(function(...)
+				local method = getnamecallmethod();
+				local args = {...};
+			
+				if method == 'FireServer' and args[1].Name == 'SayMessageRequest' then
+					args[2] = string.gsub(args[2], 'ez', function(c)
+						return char .. c;
+					end);
+					args[2] = string.gsub(args[2], 'Ez', function(c)
+						return char .. c;
+					end);
+					args[2] = string.gsub(args[2], 'eZ', function(c)
+						return char .. c;
+					end);
+					args[2] = string.gsub(args[2], 'EZ', function(c)
+						return char .. c;
+					end);
+			
+					return old.__namecall(unpack(args));
+				end;
+			
+				return old.__namecall(...);
+			end);
+			
+			setreadonly(meta, true);
 		end
 		-- #endregion
 
@@ -1013,6 +1064,7 @@ if game.PlaceId == 8343259840 then
 				)
 			)
 
+			
 		-- #endregion
 
 		-- #region Anti Afk
@@ -1177,6 +1229,10 @@ if game.PlaceId == 8343259840 then
 
 		-- #region // Main Sector
 		-- MainS:AddSeperator("The Good Boys")
+		MainS:AddButton("Bypass Ez chat", function()
+			BypassEz()
+		end)
+
         MainS:AddButton("Fly (T)", function()
 			local Torso = Character:WaitForChild('Torso')
             local dir = {w = 0, s = 0, a = 0, d = 0}

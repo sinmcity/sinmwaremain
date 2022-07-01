@@ -1,9 +1,6 @@
-if not getgenv().SinmWare == 'SinmWare On Top>>' then
-    StarterGui:SetCore("SendNotification", {Title = "SinmWare"; Text = "why did you change the sinmware on top thing!!!! change it back😡😡😡😡"; Duration = 10 })
-    return
-end
+if getgenv().SinmWare ~= 'SinmWare On Top>>' then game:GetService("StarterGui"):SetCore("SendNotification",{Title = "SinmWare",Text = "why did you change the sinmware on top thing!!!! change it back😡😡",Duration = 10}) else return end
 
-if game.PlaceId == 8343259840  then
+if game.PlaceId == 8343259840 then
 	local Success, Error = pcall(function()
 		repeat wait() until game:IsLoaded()
 
@@ -39,7 +36,7 @@ if game.PlaceId == 8343259840  then
 
 		-- #region // Variables
 
-		local Settings                          = { GunMods = { NoRecoil = true, InstantEquip = true, Spread = true, AutoMode = false, SpreadAmount = 0 }, DownedChat = false, KillChat = false, DownedMSG = "retard", KillMSG = "", IsDead = true, AutoPickCash = false, AutoPickTools = false, AutoPickScrap = false, InfiniteStamina = false, NoJumpCooldown = false, SpaceJump = false, NoFailLockpick = false, ShowChatLogs = true, NoFlashbang  = false, NoSmoke = false, UnlockDoorsNearby = false, OpenDoorsNearby = false, NoClip = false, FullBright = false, CamFovToggled = false, CamFov = 70, Zoom = 10, InfinitePepperSpray = false, PepperSprayAura = false, WalkSpeed = {Enabled = false, Amount = 30}, JumpPower = {Enabled = false, Amount = 75}, NoBarbwire = false, NoFallDamage = false, NoRagdoll = false, WatermarkOn = false, ViewModel = { Enabled = true, Viewmodel = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.ForceField }, Melees = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.ForceField }, Guns = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.Plastic }, LeftArmOff = false }, CustomHitSound = 5043539486, VolumeHitsound = .7, WallBang = false, ElevatorTP = false, TowerTP = false, UIKey = Enum.KeyCode.LeftAlt};
+		local Settings                          = { GunMods = { Fly = false,NoRecoil = false, InstantEquip = false, Spread = false, AutoMode = false, SpreadAmount = 0 }, DownedChat = false, KillChat = false, DownedMSG = "retard", KillMSG = "", IsDead = true, AutoPickCash = false, AutoPickTools = false, AutoPickScrap = false, InfiniteStamina = false, NoJumpCooldown = false, SpaceJump = false, NoFailLockpick = false, ShowChatLogs = true, NoFlashbang  = false, NoSmoke = false, UnlockDoorsNearby = false, OpenDoorsNearby = false, NoClip = false, FullBright = false, CamFovToggled = false, CamFov = 70, Zoom = 10, InfinitePepperSpray = false, PepperSprayAura = false, WalkSpeed = {Enabled = false, Amount = 30}, JumpPower = {Enabled = false, Amount = 75}, NoBarbwire = false, NoFallDamage = false, NoRagdoll = false, WatermarkOn = false, ViewModel = { Enabled = false, Viewmodel = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.ForceField }, Melees = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.ForceField }, Guns = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.Plastic }, LeftArmOff = false }, CustomHitSound = 5043539486, VolumeHitsound = .7, WallBang = false, ElevatorTP = false, TowerTP = false, UIKey = Enum.KeyCode.LeftAlt};
 		local ESPSettings                       = { PlayerESP = { Enabled = false, TracersOn = false, BoxesOn = false, NamesOn = true, DistanceOn = true, HealthOn = true, ToolOn = true, FaceCamOn = false, Distance = 2000 }, ScrapESP = { Enabled = false, Distance = 2000, LegendaryOnly = true, RareOnly = true, GoodOnly = true, BadOnly = true }, SafeESP = { Enabled = false, Distance = 2000, BigOnly = true, SmallOnly = true }, RegisterESP = { Enabled = false, Distance = 2000 }, ESPColor = Color3.fromRGB(255, 255, 255), ToolColor = Color3.fromRGB(255, 255, 255)};
 		local CoolDowns                         = { AutoPickUps = { MoneyCooldown = false, ScrapCooldown = false, ToolCooldown = false } }
 
@@ -176,6 +173,76 @@ if game.PlaceId == 8343259840  then
 			end
 			return Closest
 		end
+
+
+        local function Flyin()
+            local Torso = Character:WaitForChild('Torso')
+            enabled = false
+        
+            Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Invisicam
+            local dir = {w = 0, s = 0, a = 0, d = 0}
+            local spd = 1 
+        
+        
+            Mouse.KeyDown:Connect(function(key)
+                if key:lower() == "w" then 
+                    dir.w = 1
+                elseif key:lower() == "s" then 
+                    dir.s = 1
+                elseif key:lower() == "a" then 
+                    dir.a = 1
+                elseif key:lower() == "d" then 
+                    dir.d = 1
+                elseif key:lower() == "]" then 
+                    spd = spd + 1
+                elseif key:lower() == "[" then 
+                    spd = spd - 1
+                end 
+            end)
+            Mouse.KeyUp:Connect(function(key)
+                if key:lower() == "w" then
+                    dir.w = 0
+                elseif key:lower() == "s" then dir.s = 0
+                elseif key:lower() == "a" then dir.a = 0
+                elseif key:lower() == "d" then dir.d = 0
+                end 
+            end)
+        
+            Mouse.KeyDown:Connect(function(key)
+                if (key) == 't' and enabled == false then
+                    enabled = true
+                    repeat task.wait(1/44)
+                        Torso.Anchored = true
+                        Character:WaitForChild('Humanoid').PlatformStand = true
+                        Torso.CFrame = CFrame.new(Torso.Position, game.Workspace.CurrentCamera.CoordinateFrame.p) * CFrame.Angles(0,math.rad(180), 0) * CFrame.new((dir.d - dir.a)*spd,0,(dir.s-dir.w)*spd)
+                    until enabled == false
+                elseif enabled == false then
+                    Character:WaitForChild('Humanoid').PlatformStand = false
+                    Torso.Anchored = false
+                end
+                if (key) == 't' and enabled == true then
+                    enabled = false
+                    Character:WaitForChild('Humanoid').PlatformStand = false
+                    Torso.Anchored = false
+                end
+        
+                if Character.Humanoid.Health <= 5 and (key) == 't' and enabled == true then
+                    enabled = false
+                    Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
+                    Character:WaitForChild('Humanoid').PlatformStand = false
+                    Torso.Anchored = false
+                end
+            end)
+        
+            while true do
+                if Character.Humanoid.Health == 0 then
+                    Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
+                    enabled = false
+                    break
+                end
+                task.wait()
+            end
+        end
 		-- #endregion
 
 		-- #endregion
@@ -611,6 +678,8 @@ if game.PlaceId == 8343259840  then
 		local CustomT                  = Extra:CreateSector("Modifications", "left")
 		local CustomS                  = Extra:CreateSector("Audio", "right")
 		local SilentAimS               = General:CreateSector("Silent Aim", "right")
+        local AimbotS                  = General:CreateSector("Aimbot", "right")
+
 
 		local PlayerEspS               = Visuals:CreateSector("Player Visuals", "left")
 		local ScrapEspS                = Visuals:CreateSector("Scrap Visuals", "right")
@@ -653,7 +722,7 @@ if game.PlaceId == 8343259840  then
 			elseif AdminUserCheck.UserId == 151691292 or AdminUserCheck.UserId == 92504899 or AdminUserCheck.UserId == 31967243 then
 				StarterGui:SetCore("SendNotification", {Title = "SinmWare"; Text = "Devs Alert\n"..AdminUserCheck.Name..", Is in the server."; Icon = "rbxassetid://8426126371"; Duration = 120 })
 			elseif AdminUserCheck.UserId == 29761878 then
-				StarterGui:SetCore("SendNotification", {Title = "SinmWare"; Text = "Owner Alert\RVVZ, Is in the server."; Icon = "rbxassetid://8426126371"; Duration = 120 })
+				StarterGui:SetCore("SendNotification", {Title = "SinmWare"; Text = "Owner Alert\nRVVZ, Is in the server."; Icon = "rbxassetid://8426126371"; Duration = 120 })
 			end
 		end)
 
@@ -807,12 +876,14 @@ if game.PlaceId == 8343259840  then
 				if Settings.IsDead == false then
 					if Player.Character:FindFirstChild("Pepper-spray") then
 						if Settings.PepperSprayAura == true then
-							if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - v.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude < 15 then
-								game.Players.LocalPlayer.Character["Pepper-spray"].RemoteEvent:FireServer("Spray", true)
-								game.Players.LocalPlayer.Character["Pepper-spray"].RemoteEvent:FireServer("Hit", v.Character)
-							else
-								game.Players.LocalPlayer.Character["Pepper-spray"].RemoteEvent:FireServer("Spray", false)
-							end
+                            for i, v in pairs(Players:GetPlayers()) do
+                                if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - v.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude < 15 then
+                                    game.Players.LocalPlayer.Character["Pepper-spray"].RemoteEvent:FireServer("Spray", true)
+                                    game.Players.LocalPlayer.Character["Pepper-spray"].RemoteEvent:FireServer("Hit", v.Character)
+                                else
+                                    game.Players.LocalPlayer.Character["Pepper-spray"].RemoteEvent:FireServer("Spray", false)
+                                end
+                            end
 						end
 					end
 				end
@@ -1170,10 +1241,14 @@ if game.PlaceId == 8343259840  then
 
 		-- #region // Main Sector
 		-- MainS:AddSeperator("The Good Boys")
+        MainS:AddButton("Fly (F)", function()
+            Flyin()
+        end)
 
 		MainS:AddToggle("Infinite Stamina", Settings.InfiniteStamina, function(V)
 			Settings.InfiniteStamina = V
 		end)
+
 
 		MainS:AddToggle("No Jump Cooldown", Settings.NoJumpCooldown, function(V)
 			Settings.NoJumpCooldown = V
@@ -1394,6 +1469,29 @@ if game.PlaceId == 8343259840  then
 
 		-- #region // Silent Aim
 		-- SilentAimS:AddSeperator("- Silent Aim Settings -")
+        AimbotS:AddButton("Aimbot", function()
+            getgenv().AimPart = "Head"
+            getgenv().AimlockToggleKey = "V" 
+            getgenv().AimRadius = 50 
+            getgenv().ThirdPerson = false
+            getgenv().FirstPerson = true
+            getgenv().TeamCheck = false
+            getgenv().PredictMovement = true
+            getgenv().PredictionVelocity = 10
+            
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/sinmcity/aimlock/main/aimlockingt", true))()
+        end)
+        
+        AimbotS:AddDropdown("Aimpart", {"Head", "Torso", "HumanoidRootPart"}, "Head", false, function(V)
+
+			if V == "Head" then
+				AimPart = 'Head'
+			elseif V == "Torso" then
+				AimPart = 'Torso'
+            elseif V == "HumanoidRootPart" then
+                AimPart = 'HumanoidRootPart'
+			end
+		end)
 
 		local SilentToggle = SilentAimS:AddToggle("Silent Aim", SilentSettings.Main.Enabled, function(V)
 			SilentSettings.Main.Enabled = V
@@ -1428,7 +1526,7 @@ if game.PlaceId == 8343259840  then
 		end)
 
 		MainS:AddButton("WallBang", function()
-			game:service[[Workspace]]:FindFirstChild('Map'):FindFirstChild('Parts'):FindFirstChild('M_Parts').Parent = game:service[[Workspace]]:FindFirstChild('Characters')
+			game:GetService('Workspace'):FindFirstChild('Map'):FindFirstChild('Parts'):FindFirstChild('M_Parts').Parent = game:GetService('Workspace'):FindFirstChild('Characters')
 		end)
 		-- #endregion
 
@@ -1839,7 +1937,7 @@ if game.PlaceId == 8343259840  then
 
 		tow.Touched:Connect(function()
 			if Player and Settings.TowerTP then
-				if not d2 and not db3 then
+				if not db2 and not db3 then
 					db2 = true
 					TeleportAreaNew(CFrame.new(-4525.795, 85.759, -778.03))
 					wait(1)

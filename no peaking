@@ -1,5 +1,5 @@
 if not getgenv().SinmWare ~= 'SinmWare On Top>>' then 
-    print('ok good')
+
 else
     game:GetService("StarterGui"):SetCore("SendNotification",{Title = "SinmWare",Text = "why did you change the sinmware on top thing!!!! change it back😡😡",Duration = 10}) 
     return

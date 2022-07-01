@@ -20,21 +20,7 @@ if game.PlaceId == 8343259840 then
 			end
 		end)
 		-- #endregion
-
-		-- #region // AntiKick   
-
-		local OldNameCall
-		OldNameCall = hookmetamethod(game, "__namecall", function(Self, ...)
-			if not checkcaller() and getnamecallmethod() == "FireServer" and Self.Name == "ZFKLF_H" then
-				return
-			end
-			if not checkcaller() and getnamecallmethod() == "InvokeServer" and Self.Name == "RCTNMEUN" then
-				return 
-			end
-			return OldNameCall(Self, ...)
-		end)
-		-- #endregion
-
+		
 		-- #region // Services
 
 		local Version                           = "SinmWare - Criminality"

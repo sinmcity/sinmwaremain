@@ -1,4 +1,9 @@
-if getgenv().SinmWare ~= 'SinmWare On Top>>' then game:GetService("StarterGui"):SetCore("SendNotification",{Title = "SinmWare",Text = "why did you change the sinmware on top thing!!!! change it back😡😡",Duration = 10}) else return end
+if getgenv().SinmWare ~= 'SinmWare On Top>>' then 
+    game:GetService("StarterGui"):SetCore("SendNotification",{Title = "SinmWare",Text = "why did you change the sinmware on top thing!!!! change it back😡😡",Duration = 10}) 
+    return
+else
+    print('e')
+end
 
 if game.PlaceId == 8343259840 then
 	local Success, Error = pcall(function()

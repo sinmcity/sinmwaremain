@@ -1,8 +1,8 @@
-if getgenv().SinmWare ~= 'SinmWare On Top>>' then 
+if not getgenv().SinmWare ~= 'SinmWare On Top>>' then 
+    print('ok good')
+else
     game:GetService("StarterGui"):SetCore("SendNotification",{Title = "SinmWare",Text = "why did you change the sinmware on top thing!!!! change it back😡😡",Duration = 10}) 
     return
-else
-    print('e')
 end
 
 if game.PlaceId == 8343259840 then
@@ -185,6 +185,7 @@ if game.PlaceId == 8343259840 then
             enabled = false
         
             Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Invisicam
+
             local dir = {w = 0, s = 0, a = 0, d = 0}
             local spd = 1 
         
@@ -221,6 +222,7 @@ if game.PlaceId == 8343259840 then
                         Character:WaitForChild('Humanoid').PlatformStand = true
                         Torso.CFrame = CFrame.new(Torso.Position, game.Workspace.CurrentCamera.CoordinateFrame.p) * CFrame.Angles(0,math.rad(180), 0) * CFrame.new((dir.d - dir.a)*spd,0,(dir.s-dir.w)*spd)
                     until enabled == false
+
                 elseif enabled == false then
                     Character:WaitForChild('Humanoid').PlatformStand = false
                     Torso.Anchored = false
@@ -242,6 +244,8 @@ if game.PlaceId == 8343259840 then
             while true do
                 if Character.Humanoid.Health == 0 then
                     Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
+                    Character:WaitForChild('Humanoid').PlatformStand = false
+                    Torso.Anchored = false
                     enabled = false
                     break
                 end
@@ -1246,7 +1250,7 @@ if game.PlaceId == 8343259840 then
 
 		-- #region // Main Sector
 		-- MainS:AddSeperator("The Good Boys")
-        MainS:AddButton("Fly (F)", function()
+        MainS:AddButton("Fly (T)", function()
             Flyin()
         end)
 

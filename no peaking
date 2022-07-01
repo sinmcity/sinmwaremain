@@ -906,8 +906,6 @@ if game.PlaceId == 8343259840 then
 			Character:FindFirstChild("Humanoid").Died:Connect(function()
 				if syn then
 					if Settings.IsDead == false then
-						printconsole("Man died rip 2022 - 2022")
-
 						Settings.IsDead = true 
 					end
 				else
@@ -2249,3 +2247,7 @@ if game.PlaceId == 8343259840 then
 		end)
 	end
 end
+
+--[[
+SINMCITY DID DIS
+]]

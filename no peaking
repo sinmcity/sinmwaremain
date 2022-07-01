@@ -179,79 +179,6 @@ if game.PlaceId == 8343259840 then
 			return Closest
 		end
 
-
-        local function Flyin()
-            local Torso = Character:WaitForChild('Torso')
-            enabled = false
-        
-            Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Invisicam
-
-            local dir = {w = 0, s = 0, a = 0, d = 0}
-            local spd = 1 
-        
-        
-            Mouse.KeyDown:Connect(function(key)
-                if key:lower() == "w" then 
-                    dir.w = 1
-                elseif key:lower() == "s" then 
-                    dir.s = 1
-                elseif key:lower() == "a" then 
-                    dir.a = 1
-                elseif key:lower() == "d" then 
-                    dir.d = 1
-                elseif key:lower() == "]" then 
-                    spd = spd + 1
-                elseif key:lower() == "[" then 
-                    spd = spd - 1
-                end 
-            end)
-            Mouse.KeyUp:Connect(function(key)
-                if key:lower() == "w" then
-                    dir.w = 0
-                elseif key:lower() == "s" then dir.s = 0
-                elseif key:lower() == "a" then dir.a = 0
-                elseif key:lower() == "d" then dir.d = 0
-                end 
-            end)
-        
-            Mouse.KeyDown:Connect(function(key)
-                if (key) == 't' and enabled == false then
-                    enabled = true
-                    repeat task.wait(1/44)
-                        Torso.Anchored = true
-                        Character:WaitForChild('Humanoid').PlatformStand = true
-                        Torso.CFrame = CFrame.new(Torso.Position, game.Workspace.CurrentCamera.CoordinateFrame.p) * CFrame.Angles(0,math.rad(180), 0) * CFrame.new((dir.d - dir.a)*spd,0,(dir.s-dir.w)*spd)
-                    until enabled == false
-
-                elseif enabled == false then
-                    Character:WaitForChild('Humanoid').PlatformStand = false
-                    Torso.Anchored = false
-                end
-                if (key) == 't' and enabled == true then
-                    enabled = false
-                    Character:WaitForChild('Humanoid').PlatformStand = false
-                    Torso.Anchored = false
-                end
-        
-                if Character.Humanoid.Health <= 5 and (key) == 't' and enabled == true then
-                    enabled = false
-                    Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
-                    Character:WaitForChild('Humanoid').PlatformStand = false
-                    Torso.Anchored = false
-                end
-            end)
-        
-            while true do
-                if Character.Humanoid.Health == 0 then
-                    Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
-                    Character:WaitForChild('Humanoid').PlatformStand = false
-                    Torso.Anchored = false
-                    enabled = false
-                    break
-                end
-                task.wait()
-            end
-        end
 		-- #endregion
 
 		-- #endregion
@@ -1251,7 +1178,73 @@ if game.PlaceId == 8343259840 then
 		-- #region // Main Sector
 		-- MainS:AddSeperator("The Good Boys")
         MainS:AddButton("Fly (T)", function()
-            Flyin()
+			local Torso = Character:WaitForChild('Torso')
+            local dir = {w = 0, s = 0, a = 0, d = 0}
+            local spd = 1 
+            local enabled = false
+
+            Mouse.KeyDown:Connect(function(key)
+                if key:lower() == "w" then 
+                    dir.w = 1
+                elseif key:lower() == "s" then 
+                    dir.s = 1
+                elseif key:lower() == "a" then 
+                    dir.a = 1
+                elseif key:lower() == "d" then 
+                    dir.d = 1
+                elseif key:lower() == "]" then 
+                    spd = spd + 1
+                elseif key:lower() == "[" then 
+                    spd = spd - 1
+                end 
+
+				if (key) == 't' and enabled == false then
+                    enabled = true
+					Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Invisicam
+                    repeat task.wait(1/44)
+                        Torso.Anchored = true
+                        Character:WaitForChild('Humanoid').PlatformStand = true
+                        Torso.CFrame = CFrame.new(Torso.Position, game.Workspace.CurrentCamera.CoordinateFrame.p) * CFrame.Angles(0,math.rad(180), 0) * CFrame.new((dir.d - dir.a)*spd,0,(dir.s-dir.w)*spd)
+                    until enabled == false
+
+                elseif enabled == false then
+					Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
+                    Character:WaitForChild('Humanoid').PlatformStand = false
+                    Torso.Anchored = false
+                end
+                if (key) == 't' and enabled == true then
+                    enabled = false
+                    Character:WaitForChild('Humanoid').PlatformStand = false
+                    Torso.Anchored = false
+					Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
+                end
+        
+                if Character.Humanoid.Health <= 5 and (key) == 't' and enabled == true then
+                    enabled = false
+                    Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
+                    Character:WaitForChild('Humanoid').PlatformStand = false
+                    Torso.Anchored = false
+                end
+            end)
+            Mouse.KeyUp:Connect(function(key)
+                if key:lower() == "w" then
+                    dir.w = 0
+                elseif key:lower() == "s" then dir.s = 0
+                elseif key:lower() == "a" then dir.a = 0
+                elseif key:lower() == "d" then dir.d = 0
+                end 
+            end)
+        
+            while true do
+                if Settings.IsDead == true then
+                    Player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
+                    Character:WaitForChild('Humanoid').PlatformStand = false
+                    Torso.Anchored = false
+                    enabled = false
+                    break
+                end
+                task.wait()
+            end
         end)
 
 		MainS:AddToggle("Infinite Stamina", Settings.InfiniteStamina, function(V)
